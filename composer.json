@@ -46,6 +46,9 @@
         "symfony/intl": "^3.4|^4.3",
         "symfony/web-profiler-bundle": "^3.4|^4.3"
     },
+    "conflict": {
+        "sylius/grid-bundle": "1.7.4"
+    },
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
