@@ -1,0 +1,5 @@
+sylius_mailer:
+    emails:
+        supplier_verified:
+            subject: "I'm not used at all"
+            template: supplierVerifiedEmail.html.twig

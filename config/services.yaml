@@ -50,5 +50,5 @@ services:
                 label: 'Flat rate with extra fee3'
 
     App\VerifiedSupplierNotifierInterface: 
-        class: App\LoggingVerifiedSupplierNotifier
+        class: App\SyliusMailerVerifiedSupplierNotifier
         public: true
