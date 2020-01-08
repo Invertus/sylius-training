@@ -34,9 +34,9 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    App\Context\TimeBasedChannelContext:
-        tags: 
-            -
-                name: sylius.context.channel
-                priority: 10
+#    App\Context\TimeBasedChannelContext:
+#        tags: 
+#            -
+#                name: sylius.context.channel
+#                priority: 10
             
