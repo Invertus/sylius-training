@@ -34,13 +34,26 @@ final class FlatRateExtraFeeCalculator implements CalculatorInterface
 
         $price = (int) $configuration[$channelCode]['amount'];
 
+        if ($this->shouldExtraFeeBeAdded($subject)) {
+            $price += (int) $configuration[$channelCode]['fee'];
+        }
+
+        return $price;
+    }
+
+    public function getType(): string
+    {
+        return 'flat_rate_with_extra_fee';
+    }
+
+    private function shouldExtraFeeBeAdded(BaseShipmentInterface $subject): bool
+    {
         // add $20 if there are any products from Jeans category
         // there's only one fee even if there's multiple jeans in the order
 
         /** @var ProductVariantInterface[] $productVariants */
         $productVariants = $subject->getShippables();
 
-        $addFee = false;
         foreach ($productVariants as $productVariant) {
             /** @var ProductInterface $product */
             $product = $productVariant->getProduct();
@@ -54,20 +67,10 @@ final class FlatRateExtraFeeCalculator implements CalculatorInterface
             );
 
             if (in_array('jeans', $taxonCodes, true)) {
-                $addFee = true;
-                break;
+                return true;
             }
         }
 
-        if ($addFee) {
-            $price += 2000;
-        }
-
-        return $price;
-    }
-
-    public function getType(): string
-    {
-        return 'flat_rate_with_extra_fee';
+        return false;
     }
 }

@@ -72,7 +72,7 @@ final class FlatRateExtraFeeCalculatorSpec extends ObjectBehavior
         $order->getChannel()->willReturn($channel);
         $channel->getCode()->willReturn('WEB');
 
-        $this->calculate($shipment, ['WEB' => ['amount' => 1500]])->shouldReturn(3500);
+        $this->calculate($shipment, ['WEB' => ['amount' => 1500, 'fee' => 2000]])->shouldReturn(3500);
     }
 
     function it_adds_only_one_extra_fee_even_if_there_are_more_jeans_produts(
@@ -110,7 +110,7 @@ final class FlatRateExtraFeeCalculatorSpec extends ObjectBehavior
         $order->getChannel()->willReturn($channel);
         $channel->getCode()->willReturn('WEB');
 
-        $this->calculate($shipment, ['WEB' => ['amount' => 1500]])->shouldReturn(3500);
+        $this->calculate($shipment, ['WEB' => ['amount' => 1500, 'fee' => 2000]])->shouldReturn(3500);
     }
 
     function it_does_not_add_extra_fee_if_there_are_no_jeans_in_the_products(
@@ -137,7 +137,7 @@ final class FlatRateExtraFeeCalculatorSpec extends ObjectBehavior
         $order->getChannel()->willReturn($channel);
         $channel->getCode()->willReturn('WEB');
 
-        $this->calculate($shipment, ['WEB' => ['amount' => 1500]])->shouldReturn(1500);
+        $this->calculate($shipment, ['WEB' => ['amount' => 1500, 'fee' => 2000]])->shouldReturn(1500);
     }
 
     function it_throws_a_channel_not_defined_exception_if_channel_code_key_does_not_exist(
