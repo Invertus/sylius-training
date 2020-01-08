@@ -47,4 +47,4 @@ services:
                 name: sylius.shipping_calculator
                 calculator: flat_rate_with_extra_fee
                 form_type: App\Form\Type\ChannelBasedFlatRateExtraFeeConfigurationType
-                label: 'Flat rate with extra fee'
+                label: 'Flat rate with extra fee3'

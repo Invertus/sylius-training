@@ -1,3 +1,6 @@
 app:
     form:
         fee: Extra fee
+    ui:
+        email: Email
+        suppliers: Suppliers
