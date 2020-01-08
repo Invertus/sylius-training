@@ -11,4 +11,9 @@ winzou_state_machine:
             verify:
                 from: [unverified]
                 to: verified
-                
+        callbacks:
+            after:
+                app_supplier_verified:
+                    on: ['verify']
+                    do: ['@App\VerifiedSupplierNotifierInterface', 'notify']
+                    args: ['object']

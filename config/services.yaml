@@ -48,3 +48,7 @@ services:
                 calculator: flat_rate_with_extra_fee
                 form_type: App\Form\Type\ChannelBasedFlatRateExtraFeeConfigurationType
                 label: 'Flat rate with extra fee3'
+
+    App\VerifiedSupplierNotifierInterface: 
+        class: App\LoggingVerifiedSupplierNotifier
+        public: true
