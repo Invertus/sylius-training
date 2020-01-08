@@ -16,6 +16,11 @@ sylius_grid:
                     type: string
                     label: app.ui.email
                     sortable: ~
+                state:
+                    type: twig
+                    label: 'State'
+                    options:
+                        template: 'state.html.twig'
             filters:
                 name:
                     type: string
@@ -24,6 +29,18 @@ sylius_grid:
                     create:
                         type: create
                 item:
+                    verify:
+                        type: apply_transition
+                        label: 'Verify'
+                        icon: checkmark
+                        options:
+                            class: green
+                            link:
+                                route: app_admin_supplier_verify
+                                parameters:
+                                    id: resource.id
+                            transition: verify
+                            graph: app_supplier
                     update:
                         type: update
                     delete:

@@ -7,3 +7,17 @@ app_admin_supplier:
         grid: app_supplier
     type: sylius.resource
     prefix: admin
+
+app_admin_supplier_verify:
+    path: /admin/suppliers/{id}/verify
+    methods: [PUT]
+    defaults:
+        _controller: app.controller.supplier:applyStateMachineTransitionAction
+        _sylius:
+            permission: true
+            state_machine:
+                graph: app_supplier
+                transition: verify
+            redirect: referer
+            flash: app.supplier_verified
+        

@@ -14,6 +14,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Supplier implements ResourceInterface
 {
+    public const STATE_UNVERIFIED = 'unverified';
+    public const STATE_VERIFIED = 'verified';
+
+    public const TRANSITION_VERIFY = 'verify';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -23,19 +28,35 @@ class Supplier implements ResourceInterface
     private $id;
 
     /**
-     * @ORM\Column
+     * @ORM\Column(nullable=false)
      * @Assert\NotBlank()
      * @var string|null
      */
     private $name;
 
     /**
-     * @ORM\Column
+     * @ORM\Column(nullable=false)
      * @Assert\NotBlank()
      * @Assert\Email()
      * @var string|null
      */
     private $email;
+
+    /**
+     * @ORM\Column(nullable=false)
+     * @var string
+     */
+    private $state = self::STATE_UNVERIFIED;
+
+    public function getState(): string
+    {
+        return $this->state;
+    }
+
+    public function setState(string $state): void
+    {
+        $this->state = $state;
+    }
 
     public function getId(): ?int
     {

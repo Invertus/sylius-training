@@ -1,0 +1,14 @@
+winzou_state_machine:
+    app_supplier:
+        class: "%app.model.supplier.class%"
+        property_path: state
+        graph: app_supplier
+        state_machine_class: "%sylius.state_machine.class%"
+        states:
+            unverified: ~
+            verified: ~
+        transitions:
+            verify:
+                from: [unverified]
+                to: verified
+                
