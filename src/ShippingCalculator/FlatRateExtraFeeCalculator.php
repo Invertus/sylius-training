@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace App\ShippingCalculator;
 
 use Sylius\Component\Core\Exception\MissingChannelConfigurationException;
+use Sylius\Component\Core\Model\ProductInterface;
+use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Core\Model\ShipmentInterface;
+use Sylius\Component\Core\Model\TaxonInterface;
 use Sylius\Component\Shipping\Calculator\CalculatorInterface;
 use Sylius\Component\Shipping\Model\ShipmentInterface as BaseShipmentInterface;
 use Webmozart\Assert\Assert;
@@ -29,7 +32,38 @@ final class FlatRateExtraFeeCalculator implements CalculatorInterface
             ));
         }
 
-        return ((int) $configuration[$channelCode]['amount']) + 2000;
+        $price = (int) $configuration[$channelCode]['amount'];
+
+        // add $20 if there are any products from Jeans category
+        // there's only one fee even if there's multiple jeans in the order
+
+        /** @var ProductVariantInterface[] $productVariants */
+        $productVariants = $subject->getShippables();
+
+        $addFee = false;
+        foreach ($productVariants as $productVariant) {
+            /** @var ProductInterface $product */
+            $product = $productVariant->getProduct();
+
+            $taxons = $product->getTaxons()->toArray();
+            $taxonCodes = array_map(
+                function (TaxonInterface $taxon): string {
+                    return $taxon->getCode();
+                },
+                $taxons
+            );
+
+            if (in_array('jeans', $taxonCodes, true)) {
+                $addFee = true;
+                break;
+            }
+        }
+
+        if ($addFee) {
+            $price += 2000;
+        }
+
+        return $price;
     }
 
     public function getType(): string
