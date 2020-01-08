@@ -5,6 +5,9 @@ app_admin_supplier:
         except: ['show']
         templates: SyliusAdminBundle:Crud
         grid: app_supplier
+        vars:
+            all:
+                icon: dolly
     type: sylius.resource
     prefix: admin
 
@@ -20,4 +23,3 @@ app_admin_supplier_verify:
                 transition: verify
             redirect: referer
             flash: app.supplier_verified
-        
