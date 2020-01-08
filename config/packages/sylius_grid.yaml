@@ -5,13 +5,20 @@ sylius_grid:
                 name: doctrine/orm
                 options:
                     class: "%app.model.supplier.class%"
+            sorting:
+                name: asc
             fields:
                 name:
                     type: string
                     label: 'Name'
+                    sortable: ~
                 email:
                     type: string
                     label: app.ui.email
+                    sortable: ~
+            filters:
+                name:
+                    type: string
             actions:
                 main:
                     create:
