@@ -40,3 +40,11 @@ services:
 #                name: sylius.context.channel
 #                priority: 10
             
+    app.shipping_calculator.flat_rate_with_extra_fee:
+        class: App\ShippingCalculator\FlatRateExtraFeeCalculator
+        tags:
+            -
+                name: sylius.shipping_calculator
+                calculator: flat_rate_with_extra_fee
+                form_type: Sylius\Bundle\CoreBundle\Form\Type\Shipping\Calculator\ChannelBasedFlatRateConfigurationType
+                label: 'Flat rate with extra fee'
