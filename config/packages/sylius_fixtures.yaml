@@ -1,0 +1,7 @@
+sylius_fixtures:
+    suites:
+        default:
+            fixtures:
+                supplier:
+                    options:
+                        count: 5
