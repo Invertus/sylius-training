@@ -75,3 +75,11 @@ services:
                 
     App\Listener\AssignTrackingCodeToShipmentListener:
         public: true
+        
+    App\Promotion\BirthdayRuleChecker:
+        tags:
+            - 
+                name: sylius.promotion_rule_checker
+                type: birthday
+                form_type: App\Form\Type\NoopType
+                label: Customer birthday

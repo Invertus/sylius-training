@@ -10,4 +10,9 @@ final class RealClock implements ClockInterface
     {
         return (int) (new \DateTimeImmutable())->format('i');
     }
+
+    public function getCurrentDateTime(): \DateTimeImmutable
+    {
+        return new \DateTimeImmutable('now');
+    }
 }

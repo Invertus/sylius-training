@@ -7,4 +7,6 @@ namespace App\Clock;
 interface ClockInterface
 {
     public function getMinute(): int;
+
+    public function getCurrentDateTime(): \DateTimeImmutable;
 }
