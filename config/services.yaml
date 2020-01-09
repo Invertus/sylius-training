@@ -62,3 +62,13 @@ services:
             - { name: kernel.event_listener, event: sylius.menu.admin.main, method: __invoke }
              
     SM\Factory\FactoryInterface: "@sm.factory"
+
+    app.one_click_checkout_button:
+        class: Sylius\Bundle\UiBundle\Block\BlockEventListener
+        arguments:
+            - 'oneClickCheckoutButton.html.twig'
+        tags:
+            - 
+                name: kernel.event_listener
+                event: sonata.block.event.sylius.shop.product.show.add_to_cart_form 
+                method: onBlockEvent
