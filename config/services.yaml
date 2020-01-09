@@ -72,3 +72,6 @@ services:
                 name: kernel.event_listener
                 event: sonata.block.event.sylius.shop.product.show.add_to_cart_form 
                 method: onBlockEvent
+                
+    App\Listener\AssignTrackingCodeToShipmentListener:
+        public: true

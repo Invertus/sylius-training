@@ -17,3 +17,11 @@ winzou_state_machine:
                     on: ['verify']
                     do: ['@App\VerifiedSupplierNotifierInterface', 'notify']
                     args: ['object']
+                    
+    sylius_shipment:
+        callbacks:
+            before:
+                app_assign_tracking_code_to_shipment:
+                    on: ['ship']
+                    do: ['@App\Listener\AssignTrackingCodeToShipmentListener', '__invoke']
+                    args: ['object']
