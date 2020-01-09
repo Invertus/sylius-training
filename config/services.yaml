@@ -83,3 +83,11 @@ services:
                 type: birthday
                 form_type: App\Form\Type\NoopType
                 label: Customer birthday
+
+    App\Promotion\RoundingDownUnitsPriceDiscountPromotionActionCommand:
+        tags:
+            -
+                name: sylius.promotion_action
+                type: rounding_down_units_price
+                form_type: App\Form\Type\NoopType
+                label: Rounding down units price
