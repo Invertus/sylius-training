@@ -1,0 +1,150 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Tests;
+
+use App\Entity\Addressing\Address;
+use App\Entity\Addressing\Country;
+use App\Entity\Order\Order;
+use Doctrine\Persistence\ObjectRepository;
+use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\ExpectationFailedException;
+use Prophecy\Prophecy\ObjectProphecy;
+use Sylius\Bundle\AddressingBundle\Form\EventListener\BuildAddressFormSubscriber;
+use Sylius\Bundle\CoreBundle\Form\Type\Checkout\AddressType;
+use Sylius\Bundle\ResourceBundle\Form\Type\ResourceTranslationsType;
+use Sylius\Component\Addressing\Comparator\AddressComparator;
+use Sylius\Component\Addressing\Comparator\AddressComparatorInterface;
+use Sylius\Component\Resource\Translation\Provider\TranslationLocaleProviderInterface;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\Forms;
+use Symfony\Component\Form\PreloadedExtension;
+use Symfony\Component\Form\Test\TypeTestCase;
+
+final class CheckoutAddressTypeTest extends KernelTestCase
+{
+    /**
+     * @var FormInterface
+     */
+    private $form;
+
+    protected function setUp(): void
+    {
+        self::bootKernel();
+
+        /** @var FormFactoryInterface $factory */
+        $factory = self::$container->get('form.factory');
+
+        $this->form = $factory->create(AddressType::class, new Order());
+    }
+
+    /** @test */
+    public function it_uses_billing_address_as_shipping_address_if_different_shipping_address_is_not_checked(): void
+    {
+        $this->form->submit([
+            'billingAddress' => [
+                'firstName' => 'First',
+                'lastName' => 'Last',
+                'countryCode' => 'US',
+                'street' => 'Street',
+                'city' => 'City',
+                'postcode' => '01234',
+                'vatNumber' => 'VAT',
+            ],
+            'differentShippingAddress' => false,
+        ]);
+
+        /** @var Order $data */
+        $data = $this->form->getData();
+
+        $this->compareAddressesExcludingVatNumber($data->getShippingAddress(), $data->getBillingAddress());
+        Assert::assertSame('VAT', $data->getBillingAddress()->getVatNumber());
+        Assert::assertNull($data->getShippingAddress()->getVatNumber());
+    }
+
+    /** @test */
+    public function it_keeps_separate_billing_and_shipping_addresses_if_different_shipping_address_is_checked(): void
+    {
+        $this->form->submit([
+            'billingAddress' => [
+                'firstName' => 'First',
+                'lastName' => 'Last',
+                'countryCode' => 'US',
+                'street' => 'Street',
+                'city' => 'City',
+                'postcode' => '01234',
+                'vatNumber' => 'VAT',
+            ],
+            'shippingAddress' => [
+                'firstName' => 'First120',
+                'lastName' => 'Last120',
+                'countryCode' => 'PL',
+                'street' => 'Street120',
+                'city' => 'City120',
+                'postcode' => '98765',
+            ],
+            'differentShippingAddress' => true,
+        ]);
+
+        /** @var Order $data */
+        $data = $this->form->getData();
+
+        try {
+            $this->compareAddressesExcludingVatNumber($data->getShippingAddress(), $data->getBillingAddress());
+
+            $this->fail('Addresses should not be the same');
+        } catch (ExpectationFailedException $exception) {}
+    }
+
+    /** @test */
+    public function it_uses_billing_address_as_shipping_address_if_different_shipping_address_is_not_checked_even_if_shipping_address_is_provided(): void
+    {
+        $this->form->submit([
+            'billingAddress' => [
+                'firstName' => 'First',
+                'lastName' => 'Last',
+                'countryCode' => 'US',
+                'street' => 'Street',
+                'city' => 'City',
+                'postcode' => '01234',
+                'vatNumber' => 'VAT',
+            ],
+            'shippingAddress' => [
+                'firstName' => 'First120',
+                'lastName' => 'Last120',
+                'countryCode' => 'PL',
+                'street' => 'Street120',
+                'city' => 'City120',
+                'postcode' => '98765',
+            ],
+            'differentShippingAddress' => false,
+        ]);
+
+        /** @var Order $data */
+        $data = $this->form->getData();
+
+        $this->compareAddressesExcludingVatNumber($data->getShippingAddress(), $data->getBillingAddress());
+        Assert::assertSame('VAT', $data->getBillingAddress()->getVatNumber());
+        Assert::assertNull($data->getShippingAddress()->getVatNumber());
+    }
+
+    private function compareAddressesExcludingVatNumber(Address $firstAddress, Address $secondAddress): void
+    {
+        Assert::assertSame($firstAddress->getCity(), $secondAddress->getCity());
+        Assert::assertSame($firstAddress->getCompany(), $secondAddress->getCompany());
+        Assert::assertSame($firstAddress->getCountryCode(), $secondAddress->getCountryCode());
+        Assert::assertSame($firstAddress->getCustomer(), $secondAddress->getCustomer());
+        Assert::assertSame($firstAddress->getFirstName(), $secondAddress->getFirstName());
+        Assert::assertSame($firstAddress->getLastName(), $secondAddress->getLastName());
+        Assert::assertSame($firstAddress->getPhoneNumber(), $secondAddress->getPhoneNumber());
+        Assert::assertSame($firstAddress->getPostcode(), $secondAddress->getPostcode());
+        Assert::assertSame($firstAddress->getProvinceCode(), $secondAddress->getProvinceCode());
+        Assert::assertSame($firstAddress->getProvinceName(), $secondAddress->getProvinceName());
+        Assert::assertSame($firstAddress->getStreet(), $secondAddress->getStreet());
+    }
+}
