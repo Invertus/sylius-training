@@ -15,6 +15,7 @@ class Address extends BaseAddress
 {
     /**
      * @ORM\Column(name="vat_number", nullable=true)
+     *
      * @var string|null
      */
     private $vatNumber;

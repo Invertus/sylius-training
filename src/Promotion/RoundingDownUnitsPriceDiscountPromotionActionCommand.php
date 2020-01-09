@@ -51,6 +51,5 @@ final class RoundingDownUnitsPriceDiscountPromotionActionCommand implements Prom
 
     public function revert(PromotionSubjectInterface $order, array $configuration, PromotionInterface $promotion): void
     {
-
     }
 }

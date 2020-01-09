@@ -5,26 +5,13 @@ declare(strict_types=1);
 namespace App\Tests;
 
 use App\Entity\Addressing\Address;
-use App\Entity\Addressing\Country;
 use App\Entity\Order\Order;
-use Doctrine\Persistence\ObjectRepository;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\ExpectationFailedException;
-use Prophecy\Prophecy\ObjectProphecy;
-use Sylius\Bundle\AddressingBundle\Form\EventListener\BuildAddressFormSubscriber;
 use Sylius\Bundle\CoreBundle\Form\Type\Checkout\AddressType;
-use Sylius\Bundle\ResourceBundle\Form\Type\ResourceTranslationsType;
-use Sylius\Component\Addressing\Comparator\AddressComparator;
-use Sylius\Component\Addressing\Comparator\AddressComparatorInterface;
-use Sylius\Component\Resource\Translation\Provider\TranslationLocaleProviderInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\Forms;
-use Symfony\Component\Form\PreloadedExtension;
-use Symfony\Component\Form\Test\TypeTestCase;
 
 final class CheckoutAddressTypeTest extends KernelTestCase
 {
@@ -98,7 +85,8 @@ final class CheckoutAddressTypeTest extends KernelTestCase
             $this->compareAddressesExcludingVatNumber($data->getShippingAddress(), $data->getBillingAddress());
 
             $this->fail('Addresses should not be the same');
-        } catch (ExpectationFailedException $exception) {}
+        } catch (ExpectationFailedException $exception) {
+        }
     }
 
     /** @test */

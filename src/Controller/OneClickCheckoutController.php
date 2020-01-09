@@ -64,8 +64,7 @@ final class OneClickCheckoutController
         StateMachineFactoryInterface $stateMachineFactory,
         ObjectManager $orderManager,
         UrlGeneratorInterface $urlGenerator
-    )
-    {
+    ) {
         $this->orderFactory = $orderFactory;
         $this->shopperContext = $shopperContext;
         $this->orderItemFactory = $orderItemFactory;

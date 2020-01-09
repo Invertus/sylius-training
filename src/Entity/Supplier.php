@@ -23,6 +23,7 @@ class Supplier implements ResourceInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
      * @var int|null
      */
     private $id;
@@ -30,6 +31,7 @@ class Supplier implements ResourceInterface
     /**
      * @ORM\Column(nullable=false)
      * @Assert\NotBlank()
+     *
      * @var string|null
      */
     private $name;
@@ -38,12 +40,14 @@ class Supplier implements ResourceInterface
      * @ORM\Column(nullable=false)
      * @Assert\NotBlank()
      * @Assert\Email()
+     *
      * @var string|null
      */
     private $email;
 
     /**
      * @ORM\Column(nullable=false)
+     *
      * @var string
      */
     private $state = self::STATE_UNVERIFIED;

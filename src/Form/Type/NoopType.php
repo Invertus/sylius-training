@@ -8,5 +8,4 @@ use Symfony\Component\Form\AbstractType;
 
 final class NoopType extends AbstractType
 {
-
 }

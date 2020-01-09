@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace App\Form\Type;
 
 use Sylius\Bundle\CoreBundle\Form\Type\ChannelCollectionType;
-use Sylius\Bundle\ShippingBundle\Form\Type\Calculator\FlatRateConfigurationType;
 use Sylius\Bundle\ShippingBundle\Form\Type\Calculator\FlatRateExtraFeeConfigurationType;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Symfony\Component\Form\AbstractType;
