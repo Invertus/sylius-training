@@ -1,0 +1,4 @@
+app_shop_one_click_checkout:
+    path: /one-click-checkout/{id}
+    defaults:
+        _controller: App\Controller\OneClickCheckoutController:buyAction
