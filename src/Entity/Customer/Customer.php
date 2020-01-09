@@ -13,4 +13,5 @@ use Sylius\Component\Core\Model\Customer as BaseCustomer;
  */
 class Customer extends BaseCustomer
 {
+
 }

@@ -91,3 +91,8 @@ services:
                 type: rounding_down_units_price
                 form_type: App\Form\Type\NoopType
                 label: Rounding down units price
+
+    App\OrderProcessor\TaxesOrderProcessor:
+        decorates: sylius.order_processing.order_taxes_processor
+        arguments:
+            - '@App\OrderProcessor\TaxesOrderProcessor.inner'

@@ -13,4 +13,19 @@ use Sylius\Component\Core\Model\Address as BaseAddress;
  */
 class Address extends BaseAddress
 {
+    /**
+     * @ORM\Column(name="vat_number", nullable=true)
+     * @var string|null
+     */
+    private $vatNumber;
+
+    public function getVatNumber(): ?string
+    {
+        return $this->vatNumber;
+    }
+
+    public function setVatNumber(?string $vatNumber): void
+    {
+        $this->vatNumber = $vatNumber;
+    }
 }
