@@ -131,3 +131,9 @@ services:
                 attribute_type: !php/const \App\Attribute\VolumeAttributeType::TYPE
                 form_type: App\Form\Type\VolumeAttributeType
                 label: 'Volume'
+
+    App\Listener\AcceptGoodReviewsListener:
+        tags:
+            -
+                name: kernel.event_listener
+                event: sylius.product_review.post_create
