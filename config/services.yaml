@@ -73,6 +73,20 @@ services:
                 event: sonata.block.event.sylius.shop.product.show.add_to_cart_form 
                 method: onBlockEvent
                 
+    app.admin.product_variant.supplier_form:
+        class: Sylius\Bundle\UiBundle\Block\BlockEventListener
+        arguments:
+            - 'Admin/ProductVariant/Form/supplier.html.twig'
+        tags:
+            -   
+                name: kernel.event_listener
+                event: sonata.block.event.sylius.admin.product_variant.create.tab_details
+                method: onBlockEvent
+            -   
+                name: kernel.event_listener
+                event: sonata.block.event.sylius.admin.product_variant.update.tab_details
+                method: onBlockEvent
+                
     App\Listener\AssignTrackingCodeToShipmentListener:
         public: true
         
@@ -96,3 +110,7 @@ services:
         decorates: sylius.order_processing.order_taxes_processor
         arguments:
             - '@App\OrderProcessor\TaxesOrderProcessor.inner'
+                
+    App\Form\Extension\ProductVariantTypeExtension:
+        arguments:
+            - '%app.model.supplier.class%'
