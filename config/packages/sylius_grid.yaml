@@ -45,3 +45,22 @@ sylius_grid:
                         type: update
                     delete:
                         type: delete
+
+        sylius_admin_product_variant:
+            fields:
+                supplier:
+                    type: twig
+                    label: 'Supplier'
+                    options:
+                        template: Grid/Field/supplier.html.twig
+            filters:
+                supplier:
+                    type: entity
+                    label: 'Supplier'
+                    form_options:
+                        choice_label: name
+                        class: "%app.model.supplier.class%"
+                        required: false
+                name:
+                    form_options:
+                        type: contains
