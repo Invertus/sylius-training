@@ -114,3 +114,12 @@ services:
     App\Form\Extension\ProductVariantTypeExtension:
         arguments:
             - '%app.model.supplier.class%'
+                
+    App\Attribute\RangeAttributeType:
+        tags:
+            -
+                name: sylius.attribute.type
+                attribute_type: !php/const \App\Attribute\RangeAttributeType::TYPE
+                configuration_form_type: App\Form\Type\RangeAttributeConfigurationType
+                form_type: App\Form\Type\RangeAttributeType
+                label: 'Range'

@@ -4,3 +4,8 @@ app:
     ui:
         email: Email
         suppliers: Suppliers
+
+sylius:
+    form:
+        attribute_type:
+            range: Range
