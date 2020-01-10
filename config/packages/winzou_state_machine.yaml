@@ -25,3 +25,9 @@ winzou_state_machine:
                     on: ['ship']
                     do: ['@App\Listener\AssignTrackingCodeToShipmentListener', '__invoke']
                     args: ['object']
+                    
+    sylius_order:
+        callbacks:
+            after:
+                sylius_hold_inventory:
+                    disabled: true

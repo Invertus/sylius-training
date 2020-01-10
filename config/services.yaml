@@ -137,3 +137,12 @@ services:
             -
                 name: kernel.event_listener
                 event: sylius.product_review.post_create
+
+    App\Order\InventoryAwareOrderModifier:
+        decorates: sylius.order_modifier
+        
+    App\Listener\ReleaseOrderInventoryWhenOrderIsRemovedListener:
+        tags:
+            -
+                name: kernel.event_listener
+                event: sylius.order.post_delete
