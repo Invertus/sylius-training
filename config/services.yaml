@@ -123,3 +123,11 @@ services:
                 configuration_form_type: App\Form\Type\RangeAttributeConfigurationType
                 form_type: App\Form\Type\RangeAttributeType
                 label: 'Range'
+                
+    App\Attribute\VolumeAttributeType:
+        tags:
+            -   
+                name: sylius.attribute.type
+                attribute_type: !php/const \App\Attribute\VolumeAttributeType::TYPE
+                form_type: App\Form\Type\VolumeAttributeType
+                label: 'Volume'
